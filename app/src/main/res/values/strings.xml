@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Apply Theme</string>
+    <string name="catalogue_header">Toy Catalogue</string>
+    <string name="thumbnail">Pic of Toy</string>
+    <string name="title"> Toy Title </string>
+    <string name="description">Toy description</string>
+    <string name="add_image">Add Img</string>
+</resources>
