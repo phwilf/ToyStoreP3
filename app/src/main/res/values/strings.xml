@@ -5,4 +5,5 @@
     <string name="title"> Toy Title </string>
     <string name="description">Toy description</string>
     <string name="add_image">Add Img</string>
+    <string name="txt_btn_searchToys">Search Toys</string>
 </resources>

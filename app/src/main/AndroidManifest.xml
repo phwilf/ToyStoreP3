@@ -8,7 +8,18 @@
         android:label="@string/catalogue_header"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".Activities.MainActivity">
+
+        </activity>
+
+        <activity
+            android:name=".Activities.CartActivity"
+            android:label="Checkout">
+        </activity>
+        <activity
+            android:name=".Activities.SearchActivity"
+            android:label="Welcome!">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

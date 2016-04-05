@@ -1,20 +1,42 @@
-package com.example.phwilf.applytheme;
+package com.example.phwilf.applytheme.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.phwilf.applytheme.Adapter.RecyclerAdapter;
+import com.example.phwilf.applytheme.Cart;
+import com.example.phwilf.applytheme.R;
+import com.example.phwilf.applytheme.Toy;
+import com.example.phwilf.applytheme.ToyTouchHelper;
 
 public class MainActivity extends AppCompatActivity {
+
+    Button toCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toCart = (Button) findViewById(R.id.toCart);
+
+        toCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cartActivity = new Intent(v.getContext(), CartActivity.class);
+                cartActivity.putExtra("CartData", "Data from Main");
+                v.getContext().startActivity(cartActivity);
+            }
+        });
+
+
 
         setUpRecyclerView();
     }
@@ -43,4 +65,11 @@ public class MainActivity extends AppCompatActivity {
         helper.attachToRecyclerView(recyclerView);
 
     }
+
+
+//    public void onClick(View v) {
+//        Log.i("clicks", "You Clicked toCart");
+//        Intent i=new Intent(MainActivity.this, CartActivity.class);
+//        startActivity(i);
+//    }
 }

@@ -6,7 +6,8 @@
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginTop="5dp"
-    cardView:cardCornerRadius="5dp"
+    cardView:cardCornerRadius="2dp"
+    cardView:cardElevation="4dp"
     >
     
     <LinearLayout
@@ -53,36 +54,26 @@
                 />
         </LinearLayout>
 
-        <!-- could be extra for product checkout page, could also allow user to add to cart here --> 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            
-            <ImageView
-                android:id="@+id/img_row_delete"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_margin="7dp"
-                android:contentDescription="@string/add_image"
-                android:src="@mipmap/ic_launcher1"
-                />
-            
-            <ImageView
-                android:id="@+id/img_row_add"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_margin="7dp"
-                android:contentDescription="@string/add_image"
-                android:src="@mipmap/ic_launcher1"
+        <!-- could be extra for product checkout page, could also allow user to add to cart here -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/img_row_addCart"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="7dp"
+                    android:contentDescription="@string/add_image"
+                    android:layout_gravity="center_vertical"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_add_shopping_cart_24dp"
+                    />
+            </RelativeLayout>
 
-                />
-
-                />
             
             
         </LinearLayout>
         
-    </LinearLayout>
+
 
 </android.support.v7.widget.CardView>

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.phwilf.applytheme.Cart;
 import com.example.phwilf.applytheme.R;
 import com.example.phwilf.applytheme.Toy;
 
@@ -26,10 +27,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     private List<Toy> mData;
     private LayoutInflater mInflater;
+    public static Cart cart;
 
     public RecyclerAdapter(Context context, List<Toy> data){
         this.mData = data;
         this.mInflater = LayoutInflater.from(context);
+        cart = new Cart();
         //context = context from which RecyclerAdapter is being called
         //inflater - helps actually inflate the layout for each row in the recycler view
     }
@@ -56,13 +59,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         Toy currentObject = mData.get(position);
         holder.setData(currentObject, position);
+        holder.setListeners();
 
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
 
         TextView title, description;
-        ImageView imgThumb, imgDelete, imgAdd;
+        ImageView imgThumb, imgAddCart;
         int position;
         Toy current;
 
@@ -72,8 +76,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             title = (TextView) itemView.findViewById(R.id.tvTitle);
             description = (TextView) itemView.findViewById(R.id.tvDescription);
             imgThumb = (ImageView) itemView.findViewById(R.id.img_row);
-            imgDelete = (ImageView) itemView.findViewById(R.id.img_row_delete);
-            imgAdd = (ImageView) itemView.findViewById(R.id.img_row_add);
+            imgAddCart = (ImageView) itemView.findViewById(R.id.img_row_addCart);
 
         }
 
@@ -83,16 +86,41 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 this.description.setText(currentObject.getDescription());
                 this.imgThumb.setImageResource(currentObject.getImageID());
                 this.position = position;
-                this.current = current;
+                this.current = currentObject;
+
+        }
+
+        public void setListeners(){
+            imgAddCart.setOnClickListener(MyViewHolder.this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.d(Tag, "On click, before operation at position " + position + " size of data: " + mData.size());
+            switch (v.getId()){
+                case R.id.img_row_addCart:
+                    addItem(position, current);
+                    break;
+            }
+            Log.d(Tag, "On click, after operation at position " + position + " size of data: " + mData.size());
 
         }
     }
 
 
-    // used for swiping, won't use this in the catalogue, but will use this in the cart
+     // used for swiping, won't use this in the catalogue, but will use this in the cart
     public void remove(int position) {
         mData.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mData.size()); //notify data list of changed size
+
+    }
+
+    //adding an item
+    public void addItem(int position, Toy toy){
+        //can use a similar method to keep track of which row is being moved to pass to cart
+        cart.getUserCart().add(toy);
+        Log.d(Tag,"Items in cart: " + cart.getUserCart().size());
     }
 
     //used for dragging, use in the catalogue
@@ -100,4 +128,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         Collections.swap(mData, firstPosition, secondPosition);
         notifyItemMoved(firstPosition, secondPosition);
     }
+
+
 }
