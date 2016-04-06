@@ -23,25 +23,60 @@
         >
 
         <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/cartSum">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/your_cart"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Items: "
+                android:id="@+id/txt_totItems" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Total Price:"
+                android:id="@+id/txt_totPrice" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Checkout"
-                android:id="@+id/toCart"/>
+                android:layout_weight="1"
+                android:id="@+id/toCart"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/almostWhite"
+                android:layout_margin="3dp"/>
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cancel"/>
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/almostWhite"
+                android:layout_margin="3dp"/>
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Cart"/>
+
+
     </LinearLayout>
 </LinearLayout>
 

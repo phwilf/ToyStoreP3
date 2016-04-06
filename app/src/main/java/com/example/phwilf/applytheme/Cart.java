@@ -34,4 +34,9 @@ public class Cart {
     public void setWebsiteURL(String url){
         this.websiteURL = url;
     }
+
+    public int getTotalItems() {
+        return this.getUserCart().size();
+    }
+
 }

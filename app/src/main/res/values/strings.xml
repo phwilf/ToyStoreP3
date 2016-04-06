@@ -6,4 +6,8 @@
     <string name="description">Toy description</string>
     <string name="add_image">Add Img</string>
     <string name="txt_btn_searchToys">Search Toys</string>
+    <string name="num_items_in_cart">Items in cart: </string>
+    <string name="your_cart">My Cart</string>
+    <string name="item_num">Items: </string>
+    <string name="total_price">Total Price</string>
 </resources>

@@ -15,11 +15,16 @@ import com.example.phwilf.applytheme.Adapter.RecyclerAdapter;
 import com.example.phwilf.applytheme.Cart;
 import com.example.phwilf.applytheme.R;
 import com.example.phwilf.applytheme.Toy;
+import com.example.phwilf.applytheme.ToyList;
 import com.example.phwilf.applytheme.ToyTouchHelper;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     Button toCart;
+
+    public ArrayList<Toy> userCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,23 +32,40 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toCart = (Button) findViewById(R.id.toCart);
 
+        userCart = new ArrayList<>();
+
+        setUpRecyclerView();
+
+
+        /* BEGIN: test info that succesfully sends array list to cart screen */
+        final ArrayList<Toy> testList = new ArrayList<>();
+        final Toy toy = new Toy();
+        final Toy toy2 = new Toy();
+        final Toy toy3 = new Toy();
+        toy.setTitle("ONE");
+        toy2.setTitle("TWO");
+        toy3.setTitle("THREE");
+        toy.setDescription("Cats");
+        testList.add(toy);
+        testList.add(toy2);
+        testList.add(toy3);
+
+
         toCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cartActivity = new Intent(v.getContext(), CartActivity.class);
-                cartActivity.putExtra("CartData", "Data from Main");
+                cartActivity.putExtra("ToyData", testList);
                 v.getContext().startActivity(cartActivity);
             }
         });
-
-
-
-        setUpRecyclerView();
+        /* END: test info that succesfully sends array list to cart screen */
     }
 
     private void setUpRecyclerView() {
 
-
+        ToyList toyList = new ToyList();
+        toyList.readFromFile("/Users/phwilf/Desktop/toy_data.data");
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclyerView);
             //id defined in ActivityMain.xml

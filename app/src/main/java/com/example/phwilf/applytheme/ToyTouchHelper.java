@@ -25,7 +25,10 @@ public class ToyTouchHelper extends ItemTouchHelper.SimpleCallback {
     //use for drag/drop
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        mRecyclerAdapter.swap(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        //mRecyclerAdapter.swap(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        //try to see whether you can drag "outside" view
+        //otherwise, just use the add buttons to the cart
+
         return true;
     }
 

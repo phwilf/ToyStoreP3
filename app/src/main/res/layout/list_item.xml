@@ -68,6 +68,16 @@
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_add_shopping_cart_24dp"
                     />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/num_items_in_cart"
+                    android:id="@+id/num_items_in_cart"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
 
             

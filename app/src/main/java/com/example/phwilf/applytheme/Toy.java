@@ -1,7 +1,9 @@
 package com.example.phwilf.applytheme;
 
+import android.os.Parcelable;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,13 +12,24 @@ import java.util.ArrayList;
  *
  * Data Model that will be used to inflate data in the ListView
  */
-public class Toy {
+public class Toy implements Serializable {
+    //for passing through intent
+    @Override
+    public String toString() {
+        return "Toy{" +
+                "imageID=" + imageID +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", cartCount=" + cartCount +
+                '}';
+    }
 
     private static final String Tag = Toy.class.getSimpleName();
 
     private int imageID;
     private String title;
     private String description;
+    private int cartCount;
 
     //Getters and Setters
     public void setImage(int imageID){
@@ -25,6 +38,8 @@ public class Toy {
     public void setTitle(String title){
         this.title = title;
     }
+    public void incrementCount(){this.cartCount +=1;}
+    public int getCartCount(){return this.cartCount;}
 
     public void setDescription( String description){
         this.description = description;
@@ -61,6 +76,7 @@ public class Toy {
 
             toy.setTitle("Toy " + i);
             toy.setDescription("Description");
+            toy.cartCount = 0;
 
             dataList.add(toy);
         }
