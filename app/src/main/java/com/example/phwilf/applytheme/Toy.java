@@ -3,6 +3,13 @@ package com.example.phwilf.applytheme;
 import android.os.Parcelable;
 import android.util.Log;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -24,14 +31,103 @@ public class Toy implements Serializable {
                 '}';
     }
 
-    private static final String Tag = Toy.class.getSimpleName();
+    String toyName = null;
+    Bitmap bmp = null;
+    int price = 0;
 
+    public Toy() {
+    }
+
+    public Toy(String toyName, int price, Bitmap bmp) {
+        this.toyName = toyName;
+        this.bmp = bmp;
+        this.price = price;
+    }
+
+    public Toy(byte[] byteArray) {
+        try {
+            ByteBuffer buffer = ByteBuffer.wrap(byteArray);
+
+            int nameLength = buffer.getInt();
+            byte[] nameBuffer = new byte[nameLength ];
+            buffer.get(nameBuffer, 0, nameLength);
+            this.toyName = new String(nameBuffer);
+
+            this.price = buffer.getInt();
+
+            int imageLength = buffer.getInt();
+            byte[] imageBuffer = new byte[imageLength];
+            buffer.get(imageBuffer, 0, imageLength);
+            this.bmp = BitmapFactory.decodeByteArray(imageBuffer, 0, imageBuffer.length);
+        }
+        catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    static Toy getToyInfo(byte[] byteArray) {
+        Toy toy = new Toy(byteArray);
+        return toy;
+    }
+
+    public int getSizeInBytes() {
+        int size = 0;
+        size += Integer.SIZE + toyName.length();
+        size += Integer.SIZE;
+        size += Integer.SIZE + getImageSize();
+
+        return size;
+    }
+
+    public String getToyName() {
+        return toyName;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public Bitmap getImage() {
+        return bmp;
+    }
+
+    public int getImageSize() {
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        try {
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return baos.toByteArray().length;
+    }
+
+    void putIntToByteArray(int number, ByteArrayOutputStream baos) throws IOException {
+        ByteBuffer b = ByteBuffer.allocate(Integer.SIZE);
+        b.putInt(number);
+        baos.write(b.array());
+    }
+
+    public byte[] toByteArray() {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            putIntToByteArray(toyName.length(), baos);
+            baos.write(toyName.getBytes());
+            putIntToByteArray(price, baos);
+            putIntToByteArray(getImageSize(), baos);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        } catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
+        return baos.toByteArray();
+    }
+
+    // TODO: remove these three and functions
     private int imageID;
     private String title;
     private String description;
     private int cartCount;
 
-    //Getters and Setters
     public void setImage(int imageID){
         this.imageID = imageID;
     }
@@ -85,6 +181,4 @@ public class Toy implements Serializable {
 
         return dataList; //contains the objects to be inflated inside recycler view
     }
-
-
 }

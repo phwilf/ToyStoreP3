@@ -5,10 +5,9 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import android.util.Log;
+import java.io.File;
 
-/**
- * Created by phwilf on 4/5/16.
- */
 public class ToyList {
 
     private ArrayList<Toy2> toyList = new ArrayList<Toy2>();
@@ -78,8 +77,12 @@ public class ToyList {
     }
 
     public static void readFromFile(String filename) {
+        String Tag = ToyList.class.getSimpleName();
+        Log.d(Tag, filename);
+
         try {
-            RandomAccessFile file = new RandomAccessFile(filename, "r");
+            RandomAccessFile file = new RandomAccessFile(filename, "r"); // TODO: find file!!!
+
             int length = (int) file.length();
             byte[] temp = new byte[length];
             file.read(temp);
@@ -87,9 +90,9 @@ public class ToyList {
             ToyList toyList = new ToyList(temp, length);
             toyList.getNumOfToys();
 
-            System.out.println(toyList.getNumOfToys());
+//            Log.d(Tag, ((String) toyList.getNumOfToys()));
             for (int i = 0; i < toyList.getNumOfToys(); i++){
-                System.out.println(toyList.getToy(i).getToyName());
+                Log.d(Tag, toyList.getToy(i).getToyName());
             }
         }
         catch (IOException e) {
@@ -98,4 +101,33 @@ public class ToyList {
 
     }
 
+    // TODO: remove this
+    public static ArrayList<Toy> getData(){
+        String Tag = Toy.class.getSimpleName();
+        Log.d(Tag, "getData() in Toy");
+
+        // this is where we will be getting the datat like img, title, description
+
+        ArrayList<Toy> dataList = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++){
+            Log.d(Tag, "getData() - making toy: " + i);
+            Toy toy = new Toy();
+            if(i%2 == 0){
+                toy.setImage(R.mipmap.ic_launcher);
+            }
+            else{
+
+            }
+
+            toy.setTitle("Toy " + i);
+            toy.setDescription("Description");
+
+            dataList.add(toy);
+        }
+
+        Log.d(Tag, "Toy 1 from data list: " + dataList.get(1).getTitle());
+
+        return dataList; //contains the objects to be inflated inside recycler view
+    }
 }

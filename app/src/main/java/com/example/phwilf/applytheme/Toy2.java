@@ -14,8 +14,7 @@ import java.nio.ByteBuffer;
 public class Toy2 {
 
     String toyName = null;
-    //BufferedImage image = null;
-    Bitmap image = null; /* new */
+    Bitmap image = null;
     int price = 0;
 
     public Toy2() {
@@ -39,11 +38,7 @@ public class Toy2 {
 
         int imageLength = buffer.getInt();
         byte[] imageBuffer = new byte[imageLength];
-        // buffer.get(imageBuffer, 0, imageLength);
-
         this.image = BitmapFactory.decodeByteArray(imageBuffer, 0, imageLength); /* new */
-
-        //this.image = ImageIO.read(new ByteArrayInputStream(imageBuffer));
     }
 
     static Toy2 getToyInfo(byte[] byteArray) {
@@ -89,10 +84,16 @@ public class Toy2 {
     }
 
     public byte[] toByteArray() {
-        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            putIntToByteArray(toyName.length(), baos);
+            baos.write(toyName.getBytes());
+            putIntToByteArray(price, baos);
+            putIntToByteArray(getImageSize(), baos);
             image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] bitmapData = baos.toByteArray();
-
+        } catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
         return baos.toByteArray();
     }
 }
