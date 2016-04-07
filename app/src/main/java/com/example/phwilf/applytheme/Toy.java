@@ -139,34 +139,4 @@ public class Toy implements Serializable {
 
     public void incrementCount(){this.cartCount +=1;}
     public int getCartCount(){return this.cartCount;}
-
-//    public static ArrayList<Toy> getData(){
-//        String Tag = Toy.class.getSimpleName();
-//        Log.d(Tag, "getData() in Toy");
-//
-//        // this is where we will be getting the datat like img, title, description
-//
-//        ArrayList<Toy> dataList = new ArrayList<>();
-//
-//        for (int i = 0; i < 10; i++){
-//            Log.d(Tag, "getData() - making toy: " + i);
-//            Toy toy = new Toy();
-//            if(i%2 == 0){
-//                toy.setImage(R.mipmap.ic_launcher);
-//            }
-//            else{
-//
-//            }
-//
-//            toy.setTitle("Toy " + i);
-//            toy.setDescription("Description");
-//            toy.cartCount = 0;
-//
-//            dataList.add(toy);
-//        }
-//
-//        Log.d(Tag, "Toy 1 from data list: " + dataList.get(1).getTitle());
-//
-//        return dataList; //contains the objects to be inflated inside recycler view
-//    }
 }
