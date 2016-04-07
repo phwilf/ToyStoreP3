@@ -20,20 +20,20 @@ import java.util.ArrayList;
  * Data Model that will be used to inflate data in the ListView
  */
 public class Toy implements Serializable {
-    //for passing through intent
-    @Override
-    public String toString() {
-        return "Toy{" +
-                "imageID=" + imageID +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", cartCount=" + cartCount +
-                '}';
-    }
-
     String toyName = null;
     Bitmap bmp = null;
     int price = 0;
+
+//    //for passing through intent
+//    @Override
+//    public String toString() {
+//        return "Toy{" +
+//                "imageID=" + imageID +
+//                ", title='" + title + '\'' +
+//                ", description='" + description + '\'' +
+//                ", cartCount=" + cartCount +
+//                '}';
+//    }
 
     public Toy() {
     }
@@ -49,7 +49,7 @@ public class Toy implements Serializable {
             ByteBuffer buffer = ByteBuffer.wrap(byteArray);
 
             int nameLength = buffer.getInt();
-            byte[] nameBuffer = new byte[nameLength ];
+            byte[] nameBuffer = new byte[nameLength];
             buffer.get(nameBuffer, 0, nameLength);
             this.toyName = new String(nameBuffer);
 
@@ -58,7 +58,7 @@ public class Toy implements Serializable {
             int imageLength = buffer.getInt();
             byte[] imageBuffer = new byte[imageLength];
             buffer.get(imageBuffer, 0, imageLength);
-            this.bmp = BitmapFactory.decodeByteArray(imageBuffer, 0, imageBuffer.length);
+            this.bmp = BitmapFactory.decodeByteArray(imageBuffer, 0, imageLength);
         }
         catch (Exception e) {
             e.printStackTrace(System.out);
@@ -77,6 +77,18 @@ public class Toy implements Serializable {
         size += Integer.SIZE + getImageSize();
 
         return size;
+    }
+
+    public void setToyName(String newName) {
+        toyName = newName;
+    }
+
+    public void setPrice(int newPrice) {
+        price = newPrice;
+    }
+
+    public void setImage(Bitmap newBmp) {
+        bmp = newBmp;
     }
 
     public String getToyName() {
@@ -122,63 +134,39 @@ public class Toy implements Serializable {
         return baos.toByteArray();
     }
 
-    // TODO: remove these three and functions
-    private int imageID;
-    private String title;
-    private String description;
+    // Cart stuff
     private int cartCount;
 
-    public void setImage(int imageID){
-        this.imageID = imageID;
-    }
-    public void setTitle(String title){
-        this.title = title;
-    }
     public void incrementCount(){this.cartCount +=1;}
     public int getCartCount(){return this.cartCount;}
 
-    public void setDescription( String description){
-        this.description = description;
-    }
-
-    public int getImageID(){
-        return this.imageID;
-    }
-
-    public String getTitle(){
-        return title;
-    }
-
-    public String getDescription(){
-        return this.description;
-    }
-
-    public static ArrayList<Toy> getData(){
-        Log.d(Tag, "getData() in Toy");
-
-        // this is where we will be getting the datat like img, title, description
-
-        ArrayList<Toy> dataList = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++){
-            Log.d(Tag, "getData() - making toy: " + i);
-            Toy toy = new Toy();
-            if(i%2 == 0){
-                toy.setImage(R.mipmap.ic_launcher);
-            }
-            else{
-
-            }
-
-            toy.setTitle("Toy " + i);
-            toy.setDescription("Description");
-            toy.cartCount = 0;
-
-            dataList.add(toy);
-        }
-
-        Log.d(Tag, "Toy 1 from data list: " + dataList.get(1).getTitle());
-
-        return dataList; //contains the objects to be inflated inside recycler view
-    }
+//    public static ArrayList<Toy> getData(){
+//        String Tag = Toy.class.getSimpleName();
+//        Log.d(Tag, "getData() in Toy");
+//
+//        // this is where we will be getting the datat like img, title, description
+//
+//        ArrayList<Toy> dataList = new ArrayList<>();
+//
+//        for (int i = 0; i < 10; i++){
+//            Log.d(Tag, "getData() - making toy: " + i);
+//            Toy toy = new Toy();
+//            if(i%2 == 0){
+//                toy.setImage(R.mipmap.ic_launcher);
+//            }
+//            else{
+//
+//            }
+//
+//            toy.setTitle("Toy " + i);
+//            toy.setDescription("Description");
+//            toy.cartCount = 0;
+//
+//            dataList.add(toy);
+//        }
+//
+//        Log.d(Tag, "Toy 1 from data list: " + dataList.get(1).getTitle());
+//
+//        return dataList; //contains the objects to be inflated inside recycler view
+//    }
 }

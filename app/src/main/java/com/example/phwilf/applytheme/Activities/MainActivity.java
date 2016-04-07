@@ -18,7 +18,13 @@ import com.example.phwilf.applytheme.Toy;
 import com.example.phwilf.applytheme.ToyList;
 import com.example.phwilf.applytheme.ToyTouchHelper;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import android.os.StrictMode;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,10 +48,9 @@ public class MainActivity extends AppCompatActivity {
         final Toy toy = new Toy();
         final Toy toy2 = new Toy();
         final Toy toy3 = new Toy();
-        toy.setTitle("ONE");
-        toy2.setTitle("TWO");
-        toy3.setTitle("THREE");
-        toy.setDescription("Cats");
+        toy.setToyName("ONE");
+        toy2.setToyName("TWO");
+        toy3.setToyName("THREE");
         testList.add(toy);
         testList.add(toy2);
         testList.add(toy3);
@@ -64,12 +69,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpRecyclerView() {
 
-        ToyList toyList = new ToyList();
-        toyList.readFromFile("/Users/phwilf/Desktop/toy_data.data");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        ToyList toyList = new ToyList(readFromURL("http://people.cs.georgetown.edu/~wzhou/toy.data"));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclyerView);
             //id defined in ActivityMain.xml
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, Toy.getData());
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, toyList.getToyList());
         recyclerView.setAdapter(recyclerAdapter); //connecting RecyclerView to Adapter
 
         // Define Linear Layout Manager for Recycler View
@@ -86,6 +93,50 @@ public class MainActivity extends AppCompatActivity {
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(recyclerView);
 
+    }
+
+    public static ArrayList<Toy> readFromURL(String link) {
+        String Tag = "importantstuff";
+
+        ToyList toyList = null;
+        InputStream is = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        try {
+            URL url = new URL(link);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            is = conn.getInputStream();
+
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while ((len = is.read(buffer)) != -1) {
+                baos.write(buffer, 0, len);
+            }
+
+            byte[] byteArray = baos.toByteArray();
+
+            toyList = new ToyList(byteArray, byteArray.length);
+
+            for (int i = 0; i < toyList.getNumOfToys(); i++){
+                Log.d(Tag, toyList.getToy(i).getToyName());
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return toyList.getToyList();
     }
 
 

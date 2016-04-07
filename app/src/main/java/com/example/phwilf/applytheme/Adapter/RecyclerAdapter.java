@@ -67,7 +67,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
 
-        TextView title, description, itemsInCart;
+        TextView title, price, itemsInCart;
         ImageView imgThumb, imgAddCart;
         int position;
         Toy current;
@@ -77,7 +77,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.tvTitle);
-            description = (TextView) itemView.findViewById(R.id.tvDescription);
+            price = (TextView) itemView.findViewById(R.id.tvPrice);
             imgThumb = (ImageView) itemView.findViewById(R.id.img_row);
             imgAddCart = (ImageView) itemView.findViewById(R.id.img_row_addCart);
             itemsInCart = (TextView) itemView.findViewById(R.id.num_items_in_cart);
@@ -86,9 +86,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         public void setData(Toy currentObject, int position) {
 
-                this.title.setText(currentObject.getTitle());
-                this.description.setText(currentObject.getDescription());
-                this.imgThumb.setImageResource(currentObject.getImageID());
+                this.title.setText(currentObject.getToyName());
+                this.price.setText(Integer.toString(currentObject.getPrice()));
+                this.imgThumb.setImageBitmap(currentObject.getImage());
                 this.position = position;
                 this.current = currentObject;
                 this.itemsInCart.setText("In cart: " + currentObject.getCartCount());
