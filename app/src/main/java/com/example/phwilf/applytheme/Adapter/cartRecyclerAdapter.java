@@ -69,7 +69,7 @@ public class cartRecyclerAdapter extends RecyclerView.Adapter<cartRecyclerAdapte
         public void setData(int position, Toy currentToy){
             this.currentToy = currentToy;
             this.position = position;
-            this.title.setText(currentToy.getTitle() + " (" + currentToy.getCartCount() + ")");
+            this.title.setText(currentToy.getToyName() + " (" + currentToy.getCartCount() + ")");
         }
 
 

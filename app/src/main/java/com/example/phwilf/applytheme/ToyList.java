@@ -1,19 +1,28 @@
 package com.example.phwilf.applytheme;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.net.HttpURLConnection;
+import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-/**
- * Created by phwilf on 4/5/16.
- */
+import android.util.Log;
+import java.io.File;
+import java.net.URL;
+
 public class ToyList {
 
-    private ArrayList<Toy2> toyList = new ArrayList<Toy2>();
+    private ArrayList<Toy> toyList = new ArrayList<Toy>();
 
     public ToyList() {
+    }
+
+    public ToyList(ArrayList<Toy> inputList) {
+        toyList = inputList;
     }
 
     public ToyList(byte[] byteArray, int length) {
@@ -24,22 +33,22 @@ public class ToyList {
 
             byte[] toyBuffer = new byte[toyLength];
             buffer.get(toyBuffer, 0, toyLength);
-            Toy2 toy = new Toy2 (toyBuffer);
+            Toy toy = new Toy (toyBuffer);
 
             toyList.add(toy);
             cursor += Integer.SIZE + toyLength;
         }
     }
 
-    public void addToy(Toy2 toy) {
+    public void addToy(Toy toy) {
         toyList.add(toy);
     }
 
-    public Toy2 getToy(int index) {
+    public Toy getToy(int index) {
         return toyList.get(index);
     }
 
-    public ArrayList<Toy2> getToyList() {
+    public ArrayList<Toy> getToyList() {
         return toyList;
     }
 
@@ -65,7 +74,7 @@ public class ToyList {
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         try {
             for (int i = 0; i < toyList.size(); i++) {
-                Toy2 toy = toyList.get(i);
+                Toy toy = toyList.get(i);
                 byte[] toyBuffer = toy.toByteArray();
                 putIntToByteArray(toyBuffer.length, baos);
                 baos.write(toyBuffer);
@@ -76,26 +85,4 @@ public class ToyList {
         }
         return baos.toByteArray();
     }
-
-    public static void readFromFile(String filename) {
-        try {
-            RandomAccessFile file = new RandomAccessFile(filename, "r");
-            int length = (int) file.length();
-            byte[] temp = new byte[length];
-            file.read(temp);
-            file.close();
-            ToyList toyList = new ToyList(temp, length);
-            toyList.getNumOfToys();
-
-            System.out.println(toyList.getNumOfToys());
-            for (int i = 0; i < toyList.getNumOfToys(); i++){
-                System.out.println(toyList.getToy(i).getToyName());
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 }

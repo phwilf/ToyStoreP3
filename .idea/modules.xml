@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ApplyTheme.iml" filepath="$PROJECT_DIR$/ApplyTheme.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ToyStoreP3.iml" filepath="$PROJECT_DIR$/ToyStoreP3.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
