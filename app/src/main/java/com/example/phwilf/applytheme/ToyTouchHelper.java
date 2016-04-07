@@ -1,5 +1,6 @@
 package com.example.phwilf.applytheme;
 
+import android.content.ClipData;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
@@ -19,13 +20,14 @@ public class ToyTouchHelper extends ItemTouchHelper.SimpleCallback {
         super(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             //parameter 1 is for drag directions
             //paramater 2 is for swiping directions
+
         this.mRecyclerAdapter = recyclerAdapter;
     }
 
     //use for drag/drop
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        //mRecyclerAdapter.swap(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        mRecyclerAdapter.swap(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         //try to see whether you can drag "outside" view
         //otherwise, just use the add buttons to the cart
 
@@ -35,6 +37,14 @@ public class ToyTouchHelper extends ItemTouchHelper.SimpleCallback {
     //use for swipe
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        mRecyclerAdapter.remove(viewHolder.getAdapterPosition());
+       // mRecyclerAdapter.remove(viewHolder.getAdapterPosition());
+
+
     }
+
+    @Override
+    public boolean isItemViewSwipeEnabled(){
+        return false;
+    }
+
 }
