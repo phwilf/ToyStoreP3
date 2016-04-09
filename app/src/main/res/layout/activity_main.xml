@@ -40,14 +40,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Items: "
+                android:text="Items: 0"
                 android:id="@+id/txt_totItems" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Total Price:"
+                android:text="Total Price: $0"
                 android:id="@+id/txt_totPrice" />
         </LinearLayout>
 

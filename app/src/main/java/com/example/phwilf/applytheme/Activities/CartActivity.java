@@ -22,11 +22,7 @@ import java.util.ArrayList;
  */
 public class CartActivity extends AppCompatActivity {
 
-
     private static final String Tag = CartActivity.class.getSimpleName();
-//    private TextView tempToy1;
-//    private TextView tempToy2;
-//    private TextView tempToy3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +31,9 @@ public class CartActivity extends AppCompatActivity {
         Log.d(Tag, "Current items in cart: ");
 
         Intent intent = getIntent();
-//        Toy toy = (Toy) intent.getSerializableExtra("ToyData");
         ArrayList<Toy> testList = (ArrayList<Toy>) intent.getSerializableExtra("ToyData");
 
         setUpRecyclerView(testList);
-
-
-        //Bundle extra = getIntent().getBundleExtra("CartData");
-        //ArrayList<Toy> toyList = (ArrayList<Toy>) extra.getSerializable("testList");
-
-
-//        tempToy1 = (TextView) findViewById(R.id.txt_cart_toy1Title);
-//        tempToy1.setText(testList.get(0).getTitle());
-//        tempToy2 = (TextView) findViewById(R.id.txt_cart_toy2Title);
-//        tempToy2.setText(testList.get(1).getTitle());
-//        tempToy3 = (TextView) findViewById(R.id.txt_cart_toy3Title);
-//       tempToy3.setText(testList.get(2).getTitle());
 
     }
 
