@@ -138,5 +138,7 @@ public class Toy implements Serializable {
     private int cartCount;
 
     public void incrementCount(){this.cartCount +=1;}
+    public void decrementCount(){this.cartCount -=1;}
+    public void resetCount(){this.cartCount = 0;}
     public int getCartCount(){return this.cartCount;}
 }

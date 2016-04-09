@@ -25,43 +25,56 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import android.os.StrictMode;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
     Button toCart;
+    Button clear;
 
-    public ArrayList<Toy> userCart;
+    ToyList toyList;
+
+    public static TextView items, totalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toCart = (Button) findViewById(R.id.toCart);
-
-        userCart = new ArrayList<>();
+        clear = (Button) findViewById(R.id.clear);
 
         setUpRecyclerView();
 
-
-        /* BEGIN: test info that succesfully sends array list to cart screen */
-        final ArrayList<Toy> testList = new ArrayList<>();
-        final Toy toy = new Toy();
-        final Toy toy2 = new Toy();
-        final Toy toy3 = new Toy();
-        toy.setToyName("ONE");
-        toy2.setToyName("TWO");
-        toy3.setToyName("THREE");
-        testList.add(toy);
-        testList.add(toy2);
-        testList.add(toy3);
-
+        items = (TextView) findViewById(R.id.txt_totItems);
+        totalPrice = (TextView) findViewById(R.id.txt_totPrice);
+        Cart.items = Cart.totalPrice = 0;
+        Cart.userCart.clear();
 
         toCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cartActivity = new Intent(v.getContext(), CartActivity.class);
-                cartActivity.putExtra("ToyData", testList);
+                cartActivity.putExtra("ToyData", Cart.userCart);
                 v.getContext().startActivity(cartActivity);
+            }
+        });
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cart.items = Cart.totalPrice = 0;
+                Cart.userCart.clear();
+
+                items.setText("Items: 0");
+                totalPrice.setText("Total Price: $0");
+
+                for (Toy current : toyList.getToyList()) {
+                    current.resetCount();
+                }
+
+                // TODO: reset each item's count
             }
         });
         /* END: test info that succesfully sends array list to cart screen */
@@ -72,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        ToyList toyList = new ToyList(readFromURL("http://people.cs.georgetown.edu/~wzhou/toy.data"));
+        toyList = new ToyList(readFromURL("http://people.cs.georgetown.edu/~wzhou/toy.data"));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclyerView);
             //id defined in ActivityMain.xml

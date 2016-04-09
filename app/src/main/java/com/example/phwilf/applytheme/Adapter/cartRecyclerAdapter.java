@@ -34,6 +34,7 @@ public class cartRecyclerAdapter extends RecyclerView.Adapter<cartRecyclerAdapte
         Log.d(Tag, "onCreateViewHolder");
         View view = mInflater.inflate(R.layout.cart_list_item, parent, false); //inflate the layout for each card
         MyViewHolder holder = new MyViewHolder(view); // pass the new view of list_item to the viewHolder
+
         return holder; //return the instance of the myviewholder class
     }
 

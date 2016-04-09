@@ -40,14 +40,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Items: "
+                android:text="Items: 0"
                 android:id="@+id/txt_totItems" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Total Price:"
+                android:text="Total Price: $0"
                 android:id="@+id/txt_totPrice" />
         </LinearLayout>
 
@@ -68,10 +68,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Cancel"
-                android:background="@color/colorPrimary"
+                android:text="Clear"
+                android:background="#cc1d1d"
                 android:textColor="@color/almostWhite"
-                android:layout_margin="3dp"/>
+                android:layout_margin="3dp"
+                android:id="@+id/clear" />
 
         </LinearLayout>
 

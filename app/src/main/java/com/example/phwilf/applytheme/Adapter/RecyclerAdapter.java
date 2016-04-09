@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.phwilf.applytheme.Activities.CartActivity;
+import com.example.phwilf.applytheme.Activities.MainActivity;
 import com.example.phwilf.applytheme.Cart;
 import com.example.phwilf.applytheme.R;
 import com.example.phwilf.applytheme.Toy;
@@ -29,12 +31,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private List<Toy> mData;
     private LayoutInflater mInflater;
 
-    public final Cart cart;
-
     public RecyclerAdapter(Context context, List<Toy> data){
         this.mData = data;
         this.mInflater = LayoutInflater.from(context);
-         cart = new Cart();
         //context = context from which RecyclerAdapter is being called
         //inflater - helps actually inflate the layout for each row in the recycler view
     }
@@ -72,7 +71,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         int position;
         Toy current;
 
-
         public MyViewHolder(View itemView) {
             super(itemView);
 
@@ -81,13 +79,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             imgThumb = (ImageView) itemView.findViewById(R.id.img_row);
             imgAddCart = (ImageView) itemView.findViewById(R.id.img_row_addCart);
             itemsInCart = (TextView) itemView.findViewById(R.id.num_items_in_cart);
-
         }
 
         public void setData(Toy currentObject, int position) {
 
                 this.title.setText(currentObject.getToyName());
-                this.price.setText(Integer.toString(currentObject.getPrice()));
+                this.price.setText("$" + Integer.toString(currentObject.getPrice()));
                 this.imgThumb.setImageBitmap(currentObject.getImage());
                 this.position = position;
                 this.current = currentObject;
@@ -105,10 +102,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             switch (v.getId()){
                 case R.id.img_row_addCart:
                     //add item to cart
-                    addItem(position, current);
+                    if (!Cart.userCart.contains(current)) {
+                        addItem(position, current);
+                    }
+
                     //increment cartCount
                     current.incrementCount();
+                    Cart.items++;
+                    Cart.totalPrice += current.getPrice();
+
                     this.itemsInCart.setText("In cart: " + current.getCartCount());
+                    MainActivity.items.setText("Items: " + Cart.items);
+                    MainActivity.totalPrice.setText("Total Price: $" + Cart.totalPrice);
 
                     break;
             }
@@ -129,8 +134,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     //adding an item
     public void addItem(int position, Toy toy){
         //can use a similar method to keep track of which row is being moved to pass to cart
-        cart.getUserCart().add(toy);
-        Log.d(Tag, "Items in cart: " + cart.getTotalItems());
+        Toy newToy = toy;
+        newToy.setImage(null);
+
+        Cart.userCart.add(newToy);
+        Log.d(Tag, "Items in cart: " + Cart.items);
     }
 
     //used for dragging, use in the catalogue
