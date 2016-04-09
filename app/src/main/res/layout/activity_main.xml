@@ -68,10 +68,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Cancel"
-                android:background="@color/colorPrimary"
+                android:text="Clear"
+                android:background="#cc1d1d"
                 android:textColor="@color/almostWhite"
-                android:layout_margin="3dp"/>
+                android:layout_margin="3dp"
+                android:id="@+id/clear" />
 
         </LinearLayout>
 

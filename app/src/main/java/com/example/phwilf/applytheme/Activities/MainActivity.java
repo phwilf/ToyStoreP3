@@ -32,6 +32,9 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
 
     Button toCart;
+    Button clear;
+
+    ToyList toyList;
 
     public static TextView items, totalPrice;
 
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toCart = (Button) findViewById(R.id.toCart);
+        clear = (Button) findViewById(R.id.clear);
 
         setUpRecyclerView();
 
@@ -56,6 +60,23 @@ public class MainActivity extends AppCompatActivity {
                 v.getContext().startActivity(cartActivity);
             }
         });
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cart.items = Cart.totalPrice = 0;
+                Cart.userCart.clear();
+
+                items.setText("Items: 0");
+                totalPrice.setText("Total Price: $0");
+
+                for (Toy current : toyList.getToyList()) {
+                    current.resetCount();
+                }
+
+                // TODO: reset each item's count
+            }
+        });
         /* END: test info that succesfully sends array list to cart screen */
     }
 
@@ -64,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        ToyList toyList = new ToyList(readFromURL("http://people.cs.georgetown.edu/~wzhou/toy.data"));
+        toyList = new ToyList(readFromURL("http://people.cs.georgetown.edu/~wzhou/toy.data"));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclyerView);
             //id defined in ActivityMain.xml

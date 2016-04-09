@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.phwilf.applytheme.Adapter.RecyclerAdapter;
 import com.example.phwilf.applytheme.Adapter.cartRecyclerAdapter;
+import com.example.phwilf.applytheme.Cart;
 import com.example.phwilf.applytheme.R;
 import com.example.phwilf.applytheme.Toy;
 import com.example.phwilf.applytheme.ToyTouchHelper;
@@ -24,6 +25,8 @@ public class CartActivity extends AppCompatActivity {
 
     private static final String Tag = CartActivity.class.getSimpleName();
 
+    public static TextView items, totalPrice;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +34,14 @@ public class CartActivity extends AppCompatActivity {
         Log.d(Tag, "Current items in cart: ");
 
         Intent intent = getIntent();
-        ArrayList<Toy> testList = (ArrayList<Toy>) intent.getSerializableExtra("ToyData");
+        ArrayList<Toy> toyList = (ArrayList<Toy>) intent.getSerializableExtra("ToyData");
 
-        setUpRecyclerView(testList);
+        setUpRecyclerView(toyList);
 
+        items = (TextView) findViewById(R.id.txt_totCartItems);
+        totalPrice = (TextView) findViewById(R.id.txt_totCartPrice);
+        items.setText("Items: " + Cart.items);
+        totalPrice.setText("Total Price: $" + Cart.totalPrice);
     }
 
     private void setUpRecyclerView(ArrayList<Toy> toyList){

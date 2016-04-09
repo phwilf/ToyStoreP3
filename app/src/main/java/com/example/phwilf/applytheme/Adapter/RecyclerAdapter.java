@@ -84,7 +84,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         public void setData(Toy currentObject, int position) {
 
                 this.title.setText(currentObject.getToyName());
-                this.price.setText(Integer.toString(currentObject.getPrice()));
+                this.price.setText("$" + Integer.toString(currentObject.getPrice()));
                 this.imgThumb.setImageBitmap(currentObject.getImage());
                 this.position = position;
                 this.current = currentObject;
