@@ -67,7 +67,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
 
         TextView title, price, itemsInCart;
-        ImageView imgThumb, imgAddCart;
+        ImageView imgThumb, imgAddCart, imgRemoveCart;
         int position;
         Toy current;
 
@@ -79,6 +79,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             imgThumb = (ImageView) itemView.findViewById(R.id.img_row);
             imgAddCart = (ImageView) itemView.findViewById(R.id.img_row_addCart);
             itemsInCart = (TextView) itemView.findViewById(R.id.num_items_in_cart);
+            imgRemoveCart = (ImageView) itemView.findViewById(R.id.img_row_removeCart);
         }
 
         public void setData(Toy currentObject, int position) {
@@ -94,6 +95,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         public void setListeners(){
             imgAddCart.setOnClickListener(MyViewHolder.this);
+            imgRemoveCart.setOnClickListener(MyViewHolder.this);
         }
 
         @Override
@@ -111,12 +113,29 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                     Cart.items++;
                     Cart.totalPrice += current.getPrice();
 
-                    this.itemsInCart.setText("In cart: " + current.getCartCount());
-                    MainActivity.items.setText("Items: " + Cart.items);
-                    MainActivity.totalPrice.setText("Total Price: $" + Cart.totalPrice);
+                    break;
+                case R.id.img_row_removeCart:
+                    //remove item from cart
+                    if (Cart.userCart.contains(current)) {
+                        current.decrementCount();
+                        Cart.items--;
+                        Cart.totalPrice -= current.getPrice();
+
+                        //if no more items, remove from cart of items
+                        if(current.getCartCount() == 0){
+                            Cart.userCart.remove(current);
+                        }
+                    }
+
 
                     break;
+
             }
+            //update cart stats
+            this.itemsInCart.setText("In cart: " + current.getCartCount());
+            MainActivity.items.setText("Items: " + Cart.items);
+            MainActivity.totalPrice.setText("Total Price: $" + Cart.totalPrice);
+
             Log.d(Tag, "On click, after operation at position " + position + " size of data: " + mData.size());
 
         }

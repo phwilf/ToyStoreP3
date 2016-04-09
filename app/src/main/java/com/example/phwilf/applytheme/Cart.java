@@ -10,5 +10,5 @@ public class Cart {
     static public int totalPrice = 0;
     static public int items = 0;
 
-
 }
+

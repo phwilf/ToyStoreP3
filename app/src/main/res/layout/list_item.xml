@@ -78,7 +78,19 @@
                     android:id="@+id/num_items_in_cart"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:id="@+id/img_row_removeCart"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/add_image"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_remove_24dp"
+                    android:layout_below="@+id/img_row_addCart"
+                    android:layout_alignLeft="@+id/img_row_addCart"
+                    android:layout_alignStart="@+id/img_row_addCart" />
             </RelativeLayout>
 
             
