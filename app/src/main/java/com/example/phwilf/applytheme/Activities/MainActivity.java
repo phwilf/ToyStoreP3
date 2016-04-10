@@ -74,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
                     current.resetCount();
                 }
 
-                // TODO: reset each item's count
+                setUpRecyclerView();
+
             }
         });
         /* END: test info that succesfully sends array list to cart screen */
