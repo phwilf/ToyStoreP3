@@ -10,9 +10,9 @@
         android:id="@+id/btn_searchToys"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
+        android:background="#2eb70c"
         android:textColor="@color/almostWhite"
-        android:padding="6px"
+        android:padding="50px"
 
         />
 </RelativeLayout>

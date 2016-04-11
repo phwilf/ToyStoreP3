@@ -153,10 +153,4 @@ public class MainActivity extends AppCompatActivity {
         return toyList.getToyList();
     }
 
-
-//    public void onClick(View v) {
-//        Log.i("clicks", "You Clicked toCart");
-//        Intent i=new Intent(MainActivity.this, CartActivity.class);
-//        startActivity(i);
-//    }
 }

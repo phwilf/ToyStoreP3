@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Clear"
+                android:text="RESET"
                 android:background="#cc1d1d"
                 android:textColor="@color/almostWhite"
                 android:layout_margin="3dp"

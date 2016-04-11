@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".Activities.SearchActivity"
-            android:label="Welcome!">
+            android:label="Parker &amp; Tim's Toy Emporium">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
