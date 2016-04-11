@@ -44,9 +44,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         this.mInflater = LayoutInflater.from(context);
         //context = context from which RecyclerAdapter is being called
         //inflater - helps actually inflate the layout for each row in the recycler view
-        Log.d("wiseys", "one");
-        new FetchToyData().execute();
-        Log.d("wiseys", "two");
+        try {
+            mData = new FetchToyData().execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -119,14 +121,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                     e.printStackTrace();
                 }
             }
-            Log.d(Tag, "finished");
 
+            MainActivity.toyList = toyList;
             return toyList.getToyList();
-        }
-
-        protected void onPostExecute(ArrayList<Toy> toyList) {
-            Log.d("yolo", "plz");
-            mData = toyList;
         }
     }
 
