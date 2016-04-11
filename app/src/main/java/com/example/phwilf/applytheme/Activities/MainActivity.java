@@ -81,14 +81,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpRecyclerView() {
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        // TODO: take these two lines out!!!
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
 
-        toyList = new ToyList(readFromURL("http://people.cs.georgetown.edu/~wzhou/toy.data"));
+//        toyList = new ToyList(readFromURL("http://people.cs.georgetown.edu/~wzhou/toy.data"));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclyerView);
             //id defined in ActivityMain.xml
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, toyList.getToyList());
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this);
         recyclerView.setAdapter(recyclerAdapter); //connecting RecyclerView to Adapter
 
         // Define Linear Layout Manager for Recycler View
@@ -107,48 +108,48 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static ArrayList<Toy> readFromURL(String link) {
-        String Tag = "importantstuff";
-
-        ToyList toyList = null;
-        InputStream is = null;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        try {
-            URL url = new URL(link);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true);
-            conn.connect();
-            is = conn.getInputStream();
-
-            byte[] buffer = new byte[1024];
-            int len = 0;
-            while ((len = is.read(buffer)) != -1) {
-                baos.write(buffer, 0, len);
-            }
-
-            byte[] byteArray = baos.toByteArray();
-
-            toyList = new ToyList(byteArray, byteArray.length);
-
-            for (int i = 0; i < toyList.getNumOfToys(); i++){
-                Log.d(Tag, toyList.getToy(i).getToyName());
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return toyList.getToyList();
-    }
+//    public static ArrayList<Toy> readFromURL(String link) {
+//        String Tag = "importantstuff";
+//
+//        ToyList toyList = null;
+//        InputStream is = null;
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//
+//        try {
+//            URL url = new URL(link);
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setDoInput(true);
+//            conn.connect();
+//            is = conn.getInputStream();
+//
+//            byte[] buffer = new byte[1024];
+//            int len = 0;
+//            while ((len = is.read(buffer)) != -1) {
+//                baos.write(buffer, 0, len);
+//            }
+//
+//            byte[] byteArray = baos.toByteArray();
+//
+//            toyList = new ToyList(byteArray, byteArray.length);
+//
+//            for (int i = 0; i < toyList.getNumOfToys(); i++){
+//                Log.d(Tag, toyList.getToy(i).getToyName());
+//            }
+//        }
+//        catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        finally {
+//            try {
+//                if (is != null) {
+//                    is.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return toyList.getToyList();
+//    }
 
 }
