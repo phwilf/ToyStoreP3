@@ -1,6 +1,7 @@
 package com.example.phwilf.applytheme.Adapter;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
@@ -15,9 +16,17 @@ import com.example.phwilf.applytheme.Activities.MainActivity;
 import com.example.phwilf.applytheme.Cart;
 import com.example.phwilf.applytheme.R;
 import com.example.phwilf.applytheme.Toy;
+import com.example.phwilf.applytheme.ToyList;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.MalformedInputException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,11 +40,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private List<Toy> mData;
     private LayoutInflater mInflater;
 
-    public RecyclerAdapter(Context context, List<Toy> data){
-        this.mData = data;
+    public RecyclerAdapter(Context context){
         this.mInflater = LayoutInflater.from(context);
         //context = context from which RecyclerAdapter is being called
         //inflater - helps actually inflate the layout for each row in the recycler view
+        try {
+            mData = new FetchToyData().execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -63,6 +76,58 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.setListeners();
 
     }
+
+
+    class FetchToyData extends AsyncTask<Void, Void, ArrayList<Toy>> {
+
+        String Tag = "importantstuff";
+
+        @Override
+        protected ArrayList<Toy> doInBackground(Void... params) {
+            ToyList toyList = null;
+            InputStream is = null;
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            try {
+                URL url = new URL("http://people.cs.georgetown.edu/~wzhou/toy.data");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setDoInput(true);
+                conn.connect();
+                is = conn.getInputStream();
+
+                byte[] buffer = new byte[1024];
+                int len = 0;
+                while ((len = is.read(buffer)) != -1) {
+                    baos.write(buffer, 0, len);
+                }
+
+                byte[] byteArray = baos.toByteArray();
+
+                toyList = new ToyList(byteArray, byteArray.length);
+
+                for (int i = 0; i < toyList.getNumOfToys(); i++){
+                    Log.d(Tag, toyList.getToy(i).getToyName());
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    if (is != null) {
+                        is.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            MainActivity.toyList = toyList;
+            return toyList.getToyList();
+        }
+    }
+
+
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
 
