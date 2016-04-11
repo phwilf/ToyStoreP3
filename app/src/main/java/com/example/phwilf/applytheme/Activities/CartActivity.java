@@ -54,8 +54,8 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
-        items.setText("Items: " + Cart.items);
-        totalPrice.setText("Total Price: $" + Cart.totalPrice);
+        items.setText("Items: " + Cart.getItems());
+        totalPrice.setText("Total Price: $" + Cart.getTotalPrice());
     }
 
     //general private function for calling URLs

@@ -49,14 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
         items = (TextView) findViewById(R.id.txt_totItems);
         totalPrice = (TextView) findViewById(R.id.txt_totPrice);
-        Cart.items = Cart.totalPrice = 0;
-        Cart.userCart.clear();
+        Cart.setItems(0); Cart.setTotalPrice(0); Cart.getUserCart().clear();
 
         toCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cartActivity = new Intent(v.getContext(), CartActivity.class);
-                cartActivity.putExtra("ToyData", Cart.userCart);
+                cartActivity.putExtra("ToyData", Cart.getUserCart());
                 v.getContext().startActivity(cartActivity);
             }
         });
@@ -64,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cart.items = Cart.totalPrice = 0;
-                Cart.userCart.clear();
+                Cart.setItems(0); Cart.setTotalPrice(0); Cart.getUserCart().clear();
 
                 items.setText("Items: 0");
                 totalPrice.setText("Total Price: $0");

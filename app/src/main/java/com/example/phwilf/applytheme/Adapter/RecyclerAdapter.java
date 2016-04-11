@@ -104,26 +104,26 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             switch (v.getId()){
                 case R.id.img_row_addCart:
                     //add item to cart
-                    if (!Cart.userCart.contains(current)) {
+                    if (!Cart.getUserCart().contains(current)) {
                         addItem(position, current);
                     }
 
                     //increment cartCount
                     current.incrementCount();
-                    Cart.items++;
-                    Cart.totalPrice += current.getPrice();
+                    Cart.incrementItems();
+                    Cart.addPrice(current.getPrice());
 
                     break;
                 case R.id.img_row_removeCart:
                     //remove item from cart
-                    if (Cart.userCart.contains(current)) {
+                    if (Cart.getUserCart().contains(current)) {
                         current.decrementCount();
-                        Cart.items--;
-                        Cart.totalPrice -= current.getPrice();
+                        Cart.decrementItems();
+                        Cart.substractPrice(current.getPrice());
 
                         //if no more items, remove from cart of items
                         if(current.getCartCount() == 0){
-                            Cart.userCart.remove(current);
+                            Cart.getUserCart().remove(current);
                         }
                     }
 
@@ -133,8 +133,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             }
             //update cart stats
             this.itemsInCart.setText("In cart: " + current.getCartCount());
-            MainActivity.items.setText("Items: " + Cart.items);
-            MainActivity.totalPrice.setText("Total Price: $" + Cart.totalPrice);
+            MainActivity.items.setText("Items: " + Cart.getItems());
+            MainActivity.totalPrice.setText("Total Price: $" + Cart.getTotalPrice());
 
             Log.d(Tag, "On click, after operation at position " + position + " size of data: " + mData.size());
 
@@ -156,8 +156,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         Toy newToy = toy;
         newToy.setImage(null);
 
-        Cart.userCart.add(newToy);
-        Log.d(Tag, "Items in cart: " + Cart.items);
+        Cart.getUserCart().add(newToy);
+        Log.d(Tag, "Items in cart: " + Cart.getItems());
     }
 
     //used for dragging, use in the catalogue
